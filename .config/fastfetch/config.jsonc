@@ -1,0 +1,69 @@
+{
+  "$schema": "https://github.com/fastfetch-cli/fastfetch/raw/dev/doc/json_schema.json",
+
+  "display": {
+    "color": {
+      "keys": "cyan",  
+      "title": "cyan"
+    },
+    "key": {
+      "type": "string"
+    },
+    "bar": {
+      "width": 10,
+      "char": {
+        "elapsed": "■",
+        "total": "-"
+      }
+    },
+    "percent": {
+      "type": 9,
+      "color": {
+        "green": "green",
+        "yellow": "light_yellow",
+        "red": "light_red"
+      }
+    }
+  },
+
+  "logo": {
+    "type": "auto",
+    "source": "~/.config/fastfetch/my-logo.txt",
+  },
+
+  "modules": [
+    "break",
+    "break",
+    "break",
+    "break",
+    "break",
+    "title",
+    "break",
+
+    { "type": "os",      "keyColor": "cyan", "valueColor": "light_blue" },
+    { "type": "host",    "keyColor": "cyan", "valueColor": "blue" },
+    { "type": "kernel",  "keyColor": "cyan", "valueColor": "green" },
+    { "type": "uptime",  "keyColor": "cyan", "valueColor": "yellow" },
+    { "type": "packages","keyColor": "cyan", "valueColor": "magenta" },
+    { "type": "shell",   "keyColor": "cyan", "valueColor": "light_cyan" },
+
+    "break",
+
+    { "type": "de",      "keyColor": "cyan", "valueColor": "light_magenta" },
+    { "type": "wm",      "keyColor": "cyan", "valueColor": "light_green" },
+    { "type": "terminal","keyColor": "cyan", "valueColor": "light_red" },
+    { "type": "terminalfont", "keyColor": "cyan", "valueColor": "light_yellow" },
+
+    "break",
+
+    { "type": "cpu",     "keyColor": "cyan", "valueColor": "red" },
+    { "type": "gpu",     "keyColor": "cyan", "valueColor": "light_green" },
+    { "type": "memory",  "keyColor": "cyan", "valueColor": "magenta" },
+    { "type": "disk",    "keyColor": "cyan", "valueColor": "light_blue" },
+
+    "break",
+
+    { "type": "localip", "keyColor": "cyan", "valueColor": "light_cyan" },
+    { "type": "locale",  "keyColor": "cyan", "valueColor": "light_magenta" }
+  ]
+}

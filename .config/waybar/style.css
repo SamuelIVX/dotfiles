@@ -1,0 +1,120 @@
+@define-color black #21222c;
+@define-color green #50fa7b;
+@define-color white #ffffff;
+@define-color brred #ff6e6e;
+@define-color pink  #ff79c6;
+@define-color purple #bd93f9;
+@define-color grey #44475a;
+@define-color red #ff5555;
+
+@define-color foreground #f8f8f2;
+@define-color background rgba(40, 42, 54, 0.5);
+
+@define-color workspace_background @background;
+@define-color workspace_button @foreground;
+@define-color workspace_active @black;
+@define-color workspace_active_background @green;
+@define-color workspace_urgent @white;
+@define-color workspace_urgent_background @brred;
+@define-color workspace_hover @black;
+@define-color workspace_hover_background @pink; 
+@define-color critical @red;
+
+@keyframes blink {
+    to {
+       background-color: @white;
+       color: @black;
+   }
+}
+
+* {
+    border: none;
+    border-radius: 0;
+    /*font-family: Roboto, Helvetica, Arial, sans-serif;*/ 
+    font-family: "JetBrains Mono Nerd Font";
+    font-size: 13px;
+    min-height: 0;
+}
+
+window#waybar {
+    background: transparent;
+    color: @foreground;
+}
+
+#workspaces {
+    background: @workspace_background;
+    opacity: 1;
+    transition: none;
+    padding: 5px 5px;
+    border-radius: 5px;
+}
+
+#workspaces button, #workspaces button.persistant {
+    background: transparent;
+    color: @workspace_button;
+    transition: none;
+}
+
+#workspaces button.active {
+    background: @workspace_active_background;
+    color: @workspace_active;
+    border-radius: 5px;
+}
+
+#workspaces button.urgent {
+    background: @workspace_urgent_background;
+    color: @workspace_urgent;
+    border-radius: 5px;
+}
+
+#workspaces button:hover {
+    background: @workspace_hover_background;
+    color: @workspace_hover; 
+    border-radius: 5px;
+}
+
+#taskbar {
+   background: @background;
+   border-radius: 5px;
+   margin: 5px 10px 5px 50px;
+}
+
+tooltip {
+    background: @background;
+    opacity: 0.95;
+    border-radius: 10px;
+    border-width: 2px;
+    border-style: solid;
+    border-color: @purple;
+} 
+ 
+tooltip label {
+    color: @white;
+}
+
+#cpu,
+#disk,
+#memory,
+#clock,
+#pulseaudio,
+#network,
+#tray {
+   background: @background;
+   opacity: 1;
+   padding: 0px 5px;
+   margin: 2px 0px 2px 0px;
+}
+
+#disk.critical {
+   background-color: @warning;
+}
+
+#clock {
+   border-radius: 0px 5px 5px 0px;
+}
+
+#tray {
+   background: @background;
+   border-radius: 5px;
+   margin: 5px 50px 5px 10px;
+}
