@@ -55,20 +55,50 @@
   <summary><strong> 📸 Screenshots </strong></summary>
 
 <div align="center">
+
+  <b> Workspace 1: </b>
   
   <img src="assets/ws-1.png" width="800" alt="ws1" />
 
+  #
+
+  <b> Workspace 2: </b>
+
   <img src="assets/ws-2.png" width="800" alt="ws2" />
+
+  #
+
+  <b> Workspace 3: </b>
 
   <img src="assets/ws-3.png" width="800" alt="ws3" />
 
+  #
+
+  <b> Workspace 4: </b>
+
   <img src="assets/ws-4.png" width="800" alt="ws4" />
+
+  #
+
+  <b> Workspace 5: </b>
 
   <img src="assets/ws-5.png" width="800" alt="ws5" />
 
+  #
+
+  <b> Rofi: </b>
+
   <img src="assets/rofi.png" width="600" alt="rofi" />
 
+  #
+
+  <b> Sway: </b>
+
   <img src="assets/swaync.png" width="500" alt="swaync" />
+
+  #
+
+  <b> Waybar: </b>
   
   <img src="assets/waybar.png" height="1000" alt="waybar" />
     
