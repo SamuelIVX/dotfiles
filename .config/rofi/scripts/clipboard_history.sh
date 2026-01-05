@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# Initialize cliphist if not running
-if ! pgrep -x "wl-paste" > /dev/null; then
-    wl-paste --watch cliphist store &
-fi
-
 # Rofi theme integrated
 rofi_theme='
 configuration {
