@@ -61,9 +61,6 @@
     { "type": "memory",  "keyColor": "cyan", "valueColor": "magenta" },
     { "type": "disk",    "keyColor": "cyan", "valueColor": "light_blue" },
 
-    "break",
-
-    #{ "type": "localip", "keyColor": "cyan", "valueColor": "light_cyan" },
-    #{ "type": "locale",  "keyColor": "cyan", "valueColor": "light_magenta" }
+    "break"
   ]
 }
