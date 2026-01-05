@@ -63,7 +63,7 @@
 
     "break",
 
-    { "type": "localip", "keyColor": "cyan", "valueColor": "light_cyan" },
-    { "type": "locale",  "keyColor": "cyan", "valueColor": "light_magenta" }
+    #{ "type": "localip", "keyColor": "cyan", "valueColor": "light_cyan" },
+    #{ "type": "locale",  "keyColor": "cyan", "valueColor": "light_magenta" }
   ]
 }
