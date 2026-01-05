@@ -56,14 +56,22 @@
 
 <div align="center">
   
-  <img src="" width="600" alt="" />
+  <img src="assets/ws-1.png" width="800" alt="ws1" />
 
-  <img src="" width="600" alt="" />
+  <img src="assets/ws-2.png" width="800" alt="ws2" />
 
-  <img src="" width="450" alt="" />
+  <img src="assets/ws-3.png" width="800" alt="ws3" />
 
-  <img src="" width="600" alt="" />
+  <img src="assets/ws-4.png" width="800" alt="ws4" />
 
+  <img src="assets/ws-5.png" width="800" alt="ws5" />
+
+  <img src="assets/rofi.png" width="600" alt="rofi" />
+
+  <img src="assets/swaync.png" width="500" alt="swaync" />
+  
+  <img src="assets/waybar.png" height="1000" alt="waybar" />
+    
 </div>
 
 </details>
