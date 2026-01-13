@@ -33,7 +33,7 @@
         "disable-scroll": true,
         "all-outputs": true,
         "show-special": true,
-        "format": "[{name}]",
+        "format": "{name}",
         "persistent-workspaces": {
             "*": 5,
         },
