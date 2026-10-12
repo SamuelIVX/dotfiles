@@ -16,12 +16,12 @@ Hyprland desktop setup on Fedora Linux, styled with Catppuccin Mocha. Built for 
 │   ├── hypr/
 │   │   ├── conf/                 # Modular configuration
 │   │   │   ├── animations.conf   # Smooth slidefade transitions
-│   │   │   ├── autostart.conf    # Background daemons
-│   │   │   ├── environment.conf  # Wayland and toolkit variables
+│   │   │   ├── autostart.conf    # Background daemons & polkit agent
+│   │   │   ├── env.conf          # Wayland and toolkit variables
 │   │   │   ├── input.conf        # Keyboard, mouse, and focus
 │   │   │   ├── keybinds.conf     # Hotkeys and layout bindings
+│   │   │   ├── layouts.conf      # Dwindle layout settings
 │   │   │   ├── look_and_feel.conf# Gaps, borders, shadows, and blur
-│   │   │   ├── misc.conf         # VRR, tearing, and logos
 │   │   │   ├── monitors.conf     # Resolution, refresh rate, and scale
 │   │   │   ├── programs.conf     # Default terminal, file manager, and launcher
 │   │   │   └── windowrules.conf  # Opacity, floating, and window placement
@@ -122,10 +122,13 @@ The main modifier key is `SUPER`.
 | `SUPER + M` or `SUPER + Escape` | Open power menu (lock, logout, reboot, power off) |
 | `SUPER + F` | Open file manager (Dolphin) |
 | `SUPER + SHIFT + F` | Toggle fullscreen |
+| `SUPER + V` or `SUPER + Space` | Toggle floating / tiling window mode |
 | `SUPER + P` | Toggle pseudotile |
 | `SUPER + J` | Toggle split direction |
 | `SUPER + W` | Launch Firefox |
 | `SUPER + C` | Launch VS Code |
+| `SUPER + G` | Open Git client (Lazygit, floating) |
+| `SUPER + SHIFT + Escape` | Open system monitor (Btop, floating) |
 | `SUPER + L` | Lock screen (hyprlock) |
 | `SUPER + N` | Open notification panel (SwayNC) |
 | `SUPER + SHIFT + S` | Area screenshot to clipboard and disk (grimblast) |
@@ -152,6 +155,7 @@ An automated tuning script is included in `scripts/apply-system-optimizations.sh
 - Inotify user watch limit raised to 524,288 for large development projects.
 - Hardware video decode via RPM Fusion `mesa-va-drivers-freeworld` on AMD Radeon GPUs.
 - Disables idle background daemons (`ModemManager`, `thermald`, `rsyslog`, `abrtd`, and `lvm2-monitor`).
+- Installs modern developer CLI tools (`fzf`, `zoxide`, `eza`, `git-delta`, `duf`).
 
 To apply these tweaks:
 

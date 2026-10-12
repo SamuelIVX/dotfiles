@@ -10,12 +10,12 @@ configuration {
 }
 
 * {
-    bg: #1e2030;
-    bg-alt: rgba(45, 38, 64, 0.9);
-    fg: #e0def4;
-    border: #7dcfff;
-    selected: #7dcfff;
-    urgent: #ff757f;
+    bg: #1e1e2e;
+    bg-alt: rgba(49, 50, 68, 0.85);
+    fg: #cdd6f4;
+    border: #cba6f7;
+    selected: #b4befe;
+    urgent: #f38ba8;
     
     background-color: transparent;
     text-color: @fg;
@@ -24,7 +24,7 @@ configuration {
 window {
     width: 100%;
     height: 100%;
-    background-color: rgba(30, 32, 48, 0.95);
+    background-color: rgba(30, 30, 46, 0.95);
     border: 3px;
     border-color: @border;
 }
@@ -39,7 +39,7 @@ inputbar {
     padding: 150px 64px;
     spacing: 0px;
     border-radius: 8px;
-    background-color: rgba(125, 220, 255, 0.1);
+    background-color: rgba(203, 166, 247, 0.1);
     border: 2px;
     border-color: @border;
     children: [ "prompt", "entry" ];
@@ -56,8 +56,8 @@ prompt {
 entry {
     padding: 12px 20px;
     placeholder: "Search clipboard...";
-    placeholder-color: rgba(224, 222, 244, 0.5);
-    background-color: rgba(45, 38, 64, 0.6);
+    placeholder-color: rgba(205, 214, 244, 0.5);
+    background-color: rgba(49, 50, 68, 0.6);
     border-radius: 0px 6px 6px 0px;
 }
 
@@ -102,7 +102,7 @@ element {
 }
 
 element selected {
-    background-color: rgba(125, 220, 255, 0.15);
+    background-color: rgba(203, 166, 247, 0.15);
     border-color: @border;
     text-color: @border;
 }
