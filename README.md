@@ -122,6 +122,7 @@ The main modifier key is `SUPER`.
 | `SUPER + M` or `SUPER + Escape` | Open power menu (lock, logout, reboot, power off) |
 | `SUPER + F` | Open file manager (Dolphin) |
 | `SUPER + SHIFT + F` | Toggle fullscreen |
+| `SUPER + V` or `SUPER + Space` | Toggle floating / tiling window mode |
 | `SUPER + P` | Toggle pseudotile |
 | `SUPER + J` | Toggle split direction |
 | `SUPER + W` | Launch Firefox |
