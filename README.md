@@ -10,6 +10,10 @@ Hyprland desktop setup on Fedora Linux, styled with Catppuccin Mocha. Built for 
 ```
 ~/dotfiles/
 ├── .config/
+│   ├── btop/
+│   │   ├── btop.conf             # Resource monitor config
+│   │   └── themes/
+│   │       └── catppuccin_mocha.theme # Catppuccin Mocha theme
 │   ├── fastfetch/
 │   │   ├── config.jsonc          # System info display
 │   │   └── my-logo.txt           # Custom ASCII logo
@@ -42,7 +46,9 @@ Hyprland desktop setup on Fedora Linux, styled with Catppuccin Mocha. Built for 
 │   │   │   ├── wallpaper.sh      # Wallpaper browser
 │   │   │   └── wifi.sh           # Network selector
 │   │   └── themes/
+│   │       ├── clipboard.rasi    # Catppuccin Mocha clipboard theme
 │   │       └── current.rasi      # Catppuccin Mocha menu theme
+│   ├── starship.toml             # Catppuccin Mocha shell prompt
 │   ├── swaync/
 │   │   ├── config.json           # Notification daemon and control center
 │   │   └── style.css             # Notification panel styles
@@ -53,7 +59,8 @@ Hyprland desktop setup on Fedora Linux, styled with Catppuccin Mocha. Built for 
 │           └── launch.sh         # Reload status bar
 ├── assets/                       # Screenshots and demo media
 ├── scripts/
-│   └── apply-system-optimizations.sh # DNF, tuned profile, and service tweaks
+│   ├── apply-system-optimizations.sh # DNF, tuned profile, and service tweaks
+│   └── install-symlinks.sh       # Idempotent symlink installer for ~/.config
 └── README.md
 ```
 
@@ -144,6 +151,16 @@ The main modifier key is `SUPER`.
 | `SUPER + Left / Right / Up / Down` | Move window focus |
 | `SUPER + Left Click + Drag` | Move floating window |
 | `SUPER + Right Click + Drag` | Resize window |
+
+## Installation & setup
+
+To link all configuration directories (`hypr`, `waybar`, `kitty`, `rofi`, `swaync`, `fastfetch`, `btop`, `starship.toml`) to `~/.config/`:
+
+```bash
+./scripts/install-symlinks.sh
+```
+
+Existing conflicting configuration files or directories will be safely backed up automatically with a timestamp before creating the symlinks.
 
 ## System optimizations
 
