@@ -1,0 +1,75 @@
+# Starship Prompt - Catppuccin Mocha Minimalist Theme
+# https://starship.rs/config/
+
+add_newline = false
+
+format = """
+$directory\
+$git_branch\
+$git_status\
+$nodejs\
+$python\
+$rust\
+$java\
+$cmd_duration\
+$line_break\
+$character"""
+
+# Character / Prompt Symbol
+[character]
+success_symbol = "[❯](bold #cba6f7)"
+error_symbol = "[❯](bold #f38ba8)"
+
+# Directory
+[directory]
+style = "bold #89b4fa"
+truncation_length = 3
+truncation_symbol = "…/"
+read_only = " 󰌾"
+read_only_style = "#f38ba8"
+
+# Git
+[git_branch]
+symbol = " "
+style = "bold #a6e3a1"
+format = "[$symbol$branch]($style) "
+
+[git_status]
+style = "bold #f9e2af"
+format = "([$all_status$ahead_behind]($style) )"
+conflicted = "!"
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+untracked = "?"
+modified = "*"
+staged = "+"
+renamed = "»"
+deleted = "✘"
+
+# Command Duration
+[cmd_duration]
+min_time = 2_000
+style = "bold #fab387"
+format = "took [$duration]($style) "
+
+# Languages (clean symbols)
+[nodejs]
+symbol = " "
+style = "bold #a6e3a1"
+format = "[$symbol($version )]($style)"
+
+[python]
+symbol = " "
+style = "bold #f9e2af"
+format = "[$symbol($version )]($style)"
+
+[rust]
+symbol = " "
+style = "bold #fab387"
+format = "[$symbol($version )]($style)"
+
+[java]
+symbol = " "
+style = "bold #f38ba8"
+format = "[$symbol($version )]($style)"
