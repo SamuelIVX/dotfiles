@@ -1,25 +1,27 @@
 #!/bin/bash
 
-# Get current workspace
+# Transition settings: clean bezier fade matching monitor refresh rate (144Hz)
+TRANSITION_OPTS="--transition-type fade --transition-bezier .23,1,.32,1 --transition-duration 0.8 --transition-fps 144"
+
 change_wallpaper(){
 workspace=$(hyprctl activeworkspace -j | jq -r '.id')
 
 # Set wallpapers for each workspace
 case $workspace in
     1)
-        awww img /home/samhb/Pictures/Wallpapers/csm_wallpaper.jpg --transition-type=wave --transition-duration=1
+        awww img /home/samhb/Pictures/Wallpapers/csm_wallpaper.jpg $TRANSITION_OPTS
         ;;
     2)
-        awww img /home/samhb/Pictures/Wallpapers/reze_wallpaper.png --transition-type=any --transition-duration=1
+        awww img /home/samhb/Pictures/Wallpapers/reze_wallpaper.png $TRANSITION_OPTS
         ;;
     3)
-        awww img /home/samhb/Pictures/Wallpapers/dandadan_wallpaper.png --transition-type=grow --transition-duration=1
+        awww img /home/samhb/Pictures/Wallpapers/dandadan_wallpaper.png $TRANSITION_OPTS
         ;;
     4)
-        awww img /home/samhb/Pictures/Wallpapers/goku_black_wallpaper.jpg --transition-type=wipe --transition-duration=1
+        awww img /home/samhb/Pictures/Wallpapers/goku_black_wallpaper.jpg $TRANSITION_OPTS
         ;;
     5)
-        awww img --transition-type=outer --transition-pos 0.854,0.977 --transition-step 90 /home/samhb/Pictures/Wallpapers/evangelion_wallpaper.png
+        awww img /home/samhb/Pictures/Wallpapers/evangelion_wallpaper.png $TRANSITION_OPTS
         ;;
 esac
 

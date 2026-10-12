@@ -1,6 +1,7 @@
 #!/bin/bash
 
-WALLPAPER_DIR="$HOME/Pictures/Wallpaper"
+WALLPAPER_DIR="$HOME/Pictures/Wallpapers"
+[ -d "$WALLPAPER_DIR" ] || WALLPAPER_DIR="$HOME/Pictures/Wallpaper"
 
 # Get all wallpapers
 WALLPAPERS=$(find "$WALLPAPER_DIR" -type f \( -iname "*.jpg" -o -iname "*.png" -o -iname "*.jpeg" \) | sort)
@@ -22,7 +23,7 @@ if [ -n "$SELECTED" ]; then
     WALLPAPER_PATH=$(echo "$WALLPAPERS" | grep "$SELECTED$")
     
     if [ -f "$WALLPAPER_PATH" ]; then
-        awww img "$WALLPAPER_PATH" --transition-type wipe --transition-duration 2
+        awww img "$WALLPAPER_PATH" --transition-type fade --transition-bezier .23,1,.32,1 --transition-duration 0.8 --transition-fps 144
         notify-send "Wallpaper Changed" "$SELECTED" -i "$WALLPAPER_PATH" -t 3000
     fi
 fi
