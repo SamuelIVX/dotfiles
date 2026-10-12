@@ -49,4 +49,8 @@ if dnf repolist | grep -q "rpmfusion-free"; then
     echo "    Done: Hardware video acceleration installed."
 fi
 
+echo "[+] 6. Disabling unnecessary background daemons (ModemManager, thermald, rsyslog, abrtd, lvm2-monitor)..."
+systemctl disable --now thermald ModemManager rsyslog abrtd lvm2-monitor 2>/dev/null || true
+echo "    Done: Unnecessary background daemons disabled."
+
 echo "[✓] All system-level performance optimizations applied successfully!"
