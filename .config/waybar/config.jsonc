@@ -5,28 +5,39 @@
     "exclusive": true,
     "passthrough": false,
     "gtk-layer-shell": true,
-    "height": 36,
-    "margin-right": 5,
-    "margin-left": 5, 
+    "height": 38,
+    "margin-top": 6,
+    "margin-left": 12,
+    "margin-right": 12,
 
     "modules-left": [
         "clock",
-        "wlr/taskbar",
+        "hyprland/window"
     ],
 
     "modules-center": [
-        "hyprland/workspaces",
+        "hyprland/workspaces"
     ],
 
     "modules-right": [
         "tray",
-        "pulseaudio",
-        "pulseaudio#microphone",
         "cpu",
         "memory",
-        "disk",
+        "pulseaudio",
+        "pulseaudio#microphone",
         "network",
+        "custom/notification",
+        "custom/power"
     ],
+
+    "hyprland/window": {
+        "format": "{}",
+        "max-length": 35,
+        "separate-outputs": true,
+        "rewrite": {
+            "": "Desktop"
+        }
+    },
 
     "hyprland/workspaces": {
         "on-click": "activate",
@@ -35,63 +46,35 @@
         "show-special": true,
         "format": "{name}",
         "persistent-workspaces": {
-            "*": 5,
-        },
-    },
-
-    "wlr/taskbar": {
-        "format": "{icon}",
-        "icon-size": 12,
-        "all-outputs": true,
-        "tooltip-format": "{name}: {title}",
-        "on-click": "activate",
-        "on-click-middle": "close",
-        "ignore-list": [
-            "rofi"
-         ]
+            "*": 5
+        }
     },
 
     "tray": {
-        "icon-size": 12,
+        "icon-size": 14,
         "spacing": 10
     },
 
     "cpu": {
-        "interval": 10,
-        "format": "",
+        "interval": 5,
+        "format": " {usage}%",
         "max-length": 10,
-        "format-alt-click": "click-right",
-        "format-alt": " {usage}%",
+        "tooltip": true
     },
 
     "memory": {
-        "interval": 30,
-        "format": "",
-        "format-alt-click": "click-right",
-        "format-alt": " {}%",
+        "interval": 15,
+        "format": " {percentage}%",
         "max-length": 10,
         "tooltip": true,
-        "tooltip-format": "Memory - {used:0.1f}GB used",
-    },
-    
-    "disk": {
-        "interval": 600,
-        "format": "󰋊",
-        "path": "/",
-        "format-alt-click": "click-right",
-        "format-alt": "󰋊 {percentage_used}%",
-        "tooltip": true,
-        "tooltip-format": "HDD - {used} used out of {total} on {path} ({percentage_used}%)",
-        "states": {
-            "warning": 85,
-            "critical": 90,
-        },
+        "tooltip-format": "Memory: {used:0.1f}GB / {total:0.1f}GB"
     },
 
     "pulseaudio": {
-        "format": "{icon}",
-        "format-muted": "",
+        "format": "{icon} {volume}%",
+        "format-muted": " Muted",
         "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle",
+        "on-click-right": "pavucontrol",
         "on-scroll-up": "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+",
         "on-scroll-down": "wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%-",
         "scroll-step": 5,
@@ -113,26 +96,68 @@
         "format-source": "",
         "format-source-muted": "",
         "on-click": "wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle",
+        "on-click-right": "pavucontrol",
         "on-scroll-up": "wpctl set-volume -l 1 @DEFAULT_AUDIO_SOURCE@ 5%+",
         "on-scroll-down": "wpctl set-volume -l 1 @DEFAULT_AUDIO_SOURCE@ 5%-",
         "scroll-step": 5,
         "tooltip": true,
-        "tooltip-format": " at {volume}%"
+        "tooltip-format": "Microphone: {volume}%"
     },
 
     "network": {
-        "format": "{ifname}",
-        "format-wifi": " ",
-        "format-ethernet": " ",
-        "format-disconnected": " ", //An empty format will hide the module.
+        "format-wifi": "  {essid}",
+        "format-ethernet": "󰈀 Ethernet",
+        "format-disconnected": "󰤭 Offline",
         "tooltip-format": " {ifname} via {gwaddr}",
         "tooltip-format-wifi": " {essid} ({signalStrength}%)",
         "tooltip-format-ethernet": " {ifname} {ipaddr}/{cidr}",
         "tooltip-format-disconnected": "Disconnected",
-        "max-length": 50
+        "on-click": "~/.config/rofi/scripts/wifi.sh",
+        "max-length": 25
     },
 
     "clock": {
-        "format": "{:%a, %d. %b  %I:%M %p}"
+        "format": "  {:%a, %b %d  %I:%M %p}",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "calendar": {
+            "mode": "year",
+            "mode-mon-col": 3,
+            "weeks-pos": "right",
+            "on-scroll": 1,
+            "format": {
+                "months": "<span color='#cdd6f4'><b>{}</b></span>",
+                "days": "<span color='#a6adc8'><b>{}</b></span>",
+                "weeks": "<span color='#74c7ec'><b>W{}</b></span>",
+                "weekdays": "<span color='#fab387'><b>{}</b></span>",
+                "today": "<span color='#cba6f7'><b><u>{}</u></b></span>"
+            }
+        }
     },
+
+    "custom/notification": {
+        "tooltip": true,
+        "format": "{icon}",
+        "format-icons": {
+            "notification": "󰂚<span foreground='#f38ba8'><sup></sup></span>",
+            "none": "󰂚",
+            "dnd-notification": "󰂛<span foreground='#f38ba8'><sup></sup></span>",
+            "dnd-none": "󰂛",
+            "inhibited-notification": "󰂚<span foreground='#f38ba8'><sup></sup></span>",
+            "inhibited-none": "󰂚",
+            "dnd-inhibited-notification": "󰂛<span foreground='#f38ba8'><sup></sup></span>",
+            "dnd-inhibited-none": "󰂛"
+        },
+        "return-type": "json",
+        "exec-if": "which swaync-client",
+        "exec": "swaync-client -swb",
+        "on-click": "swaync-client -t -sw",
+        "on-click-right": "swaync-client -d -sw",
+        "escape": true
+    },
+
+    "custom/power": {
+        "format": "",
+        "tooltip": false,
+        "on-click": "~/.config/rofi/scripts/powermenu.sh"
+    }
 }
