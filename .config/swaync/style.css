@@ -1,6 +1,6 @@
 * {
-  font-family: "JetBrainsMono Nerd Font";
-  font-size: 14px;
+  font-family: "JetBrainsMono Nerd Font", monospace;
+  font-size: 13px;
   font-weight: 500;
 }
 
@@ -11,159 +11,97 @@
 }
 
 .notification {
-  background: rgba(30, 32, 48, 0.95);
-  border-radius: 8px;
-  margin: 8px;
+  background: rgba(30, 30, 46, 0.95); /* Catppuccin Base */
+  border-radius: 12px;
+  margin: 8px 12px;
   padding: 0;
-  border: 2px solid #7dcfff;
+  border: 1px solid rgba(69, 71, 90, 0.6); /* Surface1 */
+  box-shadow: 0 4px 12px rgba(17, 17, 27, 0.5); /* Crust */
+}
+
+.notification.critical {
+  border: 1px solid #f38ba8; /* Red */
 }
 
 .notification-content {
   background: transparent;
-  padding: 10px;
-  border-radius: 8px;
+  padding: 12px 14px;
+  border-radius: 12px;
 }
 
 .close-button {
-  background: rgba(125, 220, 255, 0.2);
-  color: #7dcfff;
-  text-shadow: none;
-  padding: 0;
+  background: rgba(69, 71, 90, 0.4);
+  color: #a6adc8;
+  padding: 4px;
   border-radius: 6px;
   margin: 6px;
   border: none;
 }
 
 .close-button:hover {
-  background: #7dcfff;
-  color: #1e2030;
-}
-
-.notification-default-action {
-  margin: 0;
-  padding: 0;
-  border-radius: 8px;
+  background: #f38ba8;
+  color: #11111b;
 }
 
 .summary {
-  font-size: 15px;
+  font-size: 14px;
   font-weight: bold;
-  color: #c0caf5;
-  text-shadow: none;
+  color: #cdd6f4; /* Text */
 }
 
 .time {
-  font-size: 12px;
+  font-size: 11px;
   font-weight: normal;
-  color: #7dcfff;
-  text-shadow: none;
+  color: #a6adc8; /* Subtext0 */
 }
 
 .body {
-  font-size: 13px;
+  font-size: 12px;
   font-weight: normal;
-  color: #e0def4;
-  text-shadow: none;
+  color: #bac2de; /* Subtext1 */
 }
 
 .control-center {
-  background: rgba(30, 32, 48, 0.95);
-  border: 2px solid #7dcfff;
-  border-radius: 12px;
-  margin: 10px;
-  box-shadow: 0 0 20px rgba(125, 220, 255, 0.3);
+  background: rgba(24, 24, 37, 0.95); /* Mantle */
+  border-radius: 16px;
+  border: 1px solid rgba(69, 71, 90, 0.6);
+  padding: 14px;
+  box-shadow: 0 8px 24px rgba(17, 17, 27, 0.7);
 }
 
 .control-center-list {
   background: transparent;
 }
 
-.control-center-list-placeholder {
-  opacity: 0.5;
-  color: #c0caf5;
-}
-
 .widget-title {
-  background: rgba(125, 220, 255, 0.1);
-  color: #7dcfff;
-  font-size: 18px;
+  color: #cba6f7; /* Mauve */
   font-weight: bold;
-  border-radius: 8px;
-  margin: 10px;
-  padding: 10px;
+  font-size: 15px;
+  margin: 8px;
 }
 
 .widget-title > button {
-  background: rgba(187, 154, 247, 0.2);
-  color: #bb9af7;
-  border: none;
-  border-radius: 6px;
-  padding: 8px 12px;
-  font-size: 14px;
+  background: #313244;
+  color: #cdd6f4;
+  border-radius: 8px;
+  padding: 4px 10px;
 }
 
 .widget-title > button:hover {
-  background: #bb9af7;
-  color: #1e2030;
+  background: #cba6f7;
+  color: #11111b;
 }
 
 .widget-dnd {
-  background: rgba(125, 220, 255, 0.1);
-  color: #7dcfff;
-  border-radius: 8px;
-  margin: 10px;
-  padding: 10px;
+  color: #cdd6f4;
+  margin: 8px;
 }
 
 .widget-dnd > switch {
-  background: rgba(187, 154, 247, 0.3);
-  border-radius: 20px;
-  border: none;
+  border-radius: 12px;
+  background: #313244;
 }
 
 .widget-dnd > switch:checked {
-  background: #bb9af7;
-}
-
-.widget-dnd > switch slider {
-  background: #7dcfff;
-  border-radius: 50%;
-}
-
-.widget-mpris {
-  background: rgba(45, 38, 64, 0.9);
-  border: 2px solid #bb9af7;
-  border-radius: 10px;
-  margin: 10px;
-  padding: 10px;
-  color: #e0def4;
-}
-
-.widget-mpris-player {
-  background: transparent;
-  padding: 8px;
-}
-
-.widget-mpris-title {
-  font-weight: bold;
-  font-size: 14px;
-  color: #c0caf5;
-}
-
-.widget-mpris-subtitle {
-  font-size: 12px;
-  color: #7dcfff;
-}
-
-/* Urgency levels */
-.notification.critical {
-  border: 2px solid #ff757f;
-}
-
-.notification.low {
-  border: 2px solid #bb9af7;
-}
-
-.notification.normal {
-  border: 2px solid #7dcfff;
+  background: #cba6f7;
 }
