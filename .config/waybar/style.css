@@ -106,7 +106,7 @@ tooltip label {
 }
 
 #disk.critical {
-   background-color: @warning;
+   background-color: @critical;
 }
 
 #clock {

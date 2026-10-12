@@ -14,7 +14,7 @@ fi
 # Create rofi menu with image names
 SELECTED=$(echo "$WALLPAPERS" | while read -r wallpaper; do
     basename "$wallpaper"
-done | rofi -dmenu -i -theme ~/.config/rofi/current.rasi -p "Select Wallpaper" \
+done | rofi -dmenu -i -theme ~/.config/rofi/themes/current.rasi -p "Select Wallpaper" \
     -theme-str 'window {width: 600px;} listview {lines: 10;}')
 
 # If something was selected
@@ -22,7 +22,7 @@ if [ -n "$SELECTED" ]; then
     WALLPAPER_PATH=$(echo "$WALLPAPERS" | grep "$SELECTED$")
     
     if [ -f "$WALLPAPER_PATH" ]; then
-        swww img "$WALLPAPER_PATH" --transition-type wipe --transition-duration 2
+        awww img "$WALLPAPER_PATH" --transition-type wipe --transition-duration 2
         notify-send "Wallpaper Changed" "$SELECTED" -i "$WALLPAPER_PATH" -t 3000
     fi
 fi

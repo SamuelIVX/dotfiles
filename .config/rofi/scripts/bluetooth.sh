@@ -7,7 +7,7 @@ if ! bluetoothctl show | grep -q "Powered: yes"; then
 fi
 
 DEVICES=$(bluetoothctl devices | awk '{$1=""; print substr($0,2)}')
-CHOSEN=$(echo -e "  Turn Off Bluetooth\n$DEVICES" | rofi -dmenu -i -theme ~/.config/rofi/current.rasi -p "Bluetooth")
+CHOSEN=$(echo -e "  Turn Off Bluetooth\n$DEVICES" | rofi -dmenu -i -theme ~/.config/rofi/themes/current.rasi -p "Bluetooth")
 
 if [ "$CHOSEN" = "  Turn Off Bluetooth" ]; then
     power_off
