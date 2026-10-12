@@ -54,7 +54,10 @@ systemctl disable --now thermald ModemManager rsyslog abrtd lvm2-monitor 2>/dev/
 echo "    Done: Unnecessary background daemons disabled."
 
 echo "[+] 7. Installing modern developer CLI tools (fzf, zoxide, eza, git-delta, duf)..."
-dnf install -y fzf zoxide eza git-delta duf || true
-echo "    Done: Modern developer CLI tools installed."
+if dnf install -y fzf zoxide eza git-delta duf; then
+    echo "    Done: Modern developer CLI tools installed."
+else
+    echo "    [!] Warning: Failed to install developer CLI tools. Install manually via 'sudo dnf install fzf zoxide eza git-delta duf'."
+fi
 
 echo "[✓] All system-level performance optimizations applied successfully!"
