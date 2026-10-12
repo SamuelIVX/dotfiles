@@ -6,11 +6,11 @@ notify-send "Hyprland" "Reloading configuration..."
 hyprctl reload
 
 # Restart waybar
-killall waybar
-waybar &
+killall -9 waybar 2>/dev/null || true
+nohup waybar </dev/null >/dev/null 2>&1 & disown
 
 # Restart swaync
-killall swaync
-swaync &
+killall -9 swaync 2>/dev/null || true
+nohup swaync </dev/null >/dev/null 2>&1 & disown
 
 notify-send "Hyprland" "Reload complete!" -t 3000
