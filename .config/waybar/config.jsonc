@@ -67,7 +67,7 @@
         "format": " {percentage}%",
         "max-length": 10,
         "tooltip": true,
-        "tooltip-format": "Memory: {used:0.1f}GB / {total:0.1f}GB"
+        "tooltip-format": "Memory: {used:0.1f}GiB / {total:0.1f}GiB"
     },
 
     "pulseaudio": {
@@ -101,7 +101,7 @@
         "on-scroll-down": "wpctl set-volume -l 1 @DEFAULT_AUDIO_SOURCE@ 5%-",
         "scroll-step": 5,
         "tooltip": true,
-        "tooltip-format": "Microphone: {volume}%"
+        "tooltip-format": "Microphone: {source_volume}%"
     },
 
     "network": {

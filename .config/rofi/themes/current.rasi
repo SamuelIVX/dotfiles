@@ -45,7 +45,7 @@ window {
 
 mainbox {
     padding: 16px;
-    children: [inputbar, listview];
+    children: [inputbar, message, listview, mode-switcher];
 }
 
 inputbar {
@@ -100,4 +100,34 @@ element selected {
 
 element selected element-text {
     text-color: @border;
+}
+
+mode-switcher {
+    spacing: 8px;
+    margin: 12px 0 0 0;
+}
+
+button {
+    padding: 8px 12px;
+    background-color: @bg-alt;
+    text-color: @fg-alt;
+    border-radius: 8px;
+    vertical-align: 0.5;
+    horizontal-align: 0.5;
+}
+
+button selected {
+    background-color: @border;
+    text-color: @bg;
+}
+
+message {
+    padding: 8px;
+    margin: 0 0 8px 0;
+    border-radius: 8px;
+    background-color: @bg-alt;
+}
+
+textbox {
+    text-color: @fg;
 }
