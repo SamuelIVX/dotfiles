@@ -11,6 +11,7 @@ while true; do
     mapfile -t entries <<< "$history"
     status=0
     selected=$(printf '%s\n' "${entries[@]}" | rofi -dmenu -i -no-custom -format i \
+        -kb-remove-char-forward Control+d -kb-remove-word-forward Control+Alt+d \
         -kb-custom-1 Delete -kb-custom-2 Control+Delete \
         -p 'CLIPBOARD HISTORY' -mesg '[ ENTER ] COPY   [ DEL ] DELETE ENTRY   [ CTRL+DEL ] CLEAR ALL' \
         -theme "$HOME/.config/rofi/themes/clipboard.rasi") || status=$?
