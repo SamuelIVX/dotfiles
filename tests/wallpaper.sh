@@ -19,6 +19,7 @@ except PermissionError:
 PY
 cat > "$task_tmp/bin/hyprctl" <<'MOCK'
 #!/bin/bash
+[[ ! -f $TEST_LOG.fail ]] || exit 1
 printf '{"id":%s}\n' "${TEST_WORKSPACE:-1}"
 MOCK
 cat > "$task_tmp/bin/awww" <<'MOCK'
@@ -29,6 +30,7 @@ MOCK
 cat > "$task_tmp/bin/socat" <<'MOCK'
 #!/bin/bash
 sleep 0.5
+[[ ${TEST_EVENT_FAIL:-0} != 1 ]] || touch "$TEST_LOG.fail"
 printf 'activewindow>>ignored\nworkspace>>1\n'
 MOCK
 chmod +x "$task_tmp/bin/"*
@@ -45,6 +47,11 @@ for ((i=0; i<100; i++)); do [[ -f $TEST_LOG ]] && break; sleep 0.01; done
 bash "$script"
 wait "$listener"
 [[ $(wc -l < "$TEST_LOG") == 2 ]]
+rm "$TEST_LOG"
+TEST_EVENT_FAIL=1 bash "$script" 2> "$task_tmp/errors"
+[[ $(wc -l < "$TEST_LOG") == 1 ]]
+grep -q 'Could not read active workspace' "$task_tmp/errors"
+rm "$TEST_LOG.fail"
 rm "$HOME/Pictures/Wallpapers/csm_wallpaper.jpg"
 if bash "$script" --once >/dev/null 2>&1; then echo 'Missing image accepted' >&2; exit 1; fi
 if bash "$script" --invalid >/dev/null 2>&1; then exit 1; fi
