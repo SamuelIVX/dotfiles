@@ -14,7 +14,10 @@ done
 # Apply the current workspace image; unmapped workspaces retain the last image.
 change_wallpaper() {
     local workspace image
-    workspace=$(hyprctl activeworkspace -j | jq -er '.id')
+    if ! workspace=$(hyprctl activeworkspace -j | jq -er '.id'); then
+        echo 'Could not read active workspace.' >&2
+        return 1
+    fi
     case "$workspace" in
         1) image=csm_wallpaper.jpg ;;
         2) image=reze_wallpaper.png ;;
