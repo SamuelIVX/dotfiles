@@ -188,3 +188,10 @@ mock commands and temporary homes; they do not alter the running desktop.
 The workspace wallpaper listener has one owner per Hyprland session. `SUPER+A`
 runs `wallpaper.sh --once` to refresh without creating another listener. Workspaces
 6–10 retain the last wallpaper. Missing images and daemon failures go to stderr.
+
+Rofi Wi-Fi selection opens Kitty with NetworkManager's `nmcli --ask` prompt;
+saved credentials and authentication remain NetworkManager's responsibility.
+Clipboard history supports Enter to copy, Delete to delete the selected entry,
+and Ctrl+Delete to clear history after confirmation. Escape leaves the clipboard
+and history alone. Wallpaper selection displays relative paths and handles
+punctuation and duplicate filenames without regex matching.
