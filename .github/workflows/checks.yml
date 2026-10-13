@@ -1,0 +1,14 @@
+# Validate shell syntax, regressions, and shell usage on pull requests.
+name: Dotfiles checks
+on: [push, pull_request]
+permissions:
+  contents: read
+jobs:
+  shell:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y shellcheck jq
+      - run: bash tests/run.sh
+      - name: ShellCheck changed shell scripts
+        run: shellcheck .config/hypr/scripts/wallpaper.sh tests/*.sh

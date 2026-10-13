@@ -179,3 +179,12 @@ To apply these tweaks:
 ```bash
 sudo ./scripts/apply-system-optimizations.sh
 ```
+
+## Verification
+
+Run `bash tests/run.sh` for shell syntax and isolated regression checks. Tests use
+mock commands and temporary homes; they do not alter the running desktop.
+
+The workspace wallpaper listener has one owner per Hyprland session. `SUPER+A`
+runs `wallpaper.sh --once` to refresh without creating another listener. Workspaces
+6–10 retain the last wallpaper. Missing images and daemon failures go to stderr.
