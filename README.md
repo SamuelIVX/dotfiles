@@ -164,21 +164,17 @@ Existing conflicting configuration files or directories will be safely backed up
 
 ## System optimizations
 
-An automated tuning script is included in `scripts/apply-system-optimizations.sh`. It configures:
-
-- DNF parallel downloads (capped at 2), fastest mirror selection, and default yes prompts.
-- Tuned power profile set to `desktop` for responsive CPU governor scaling.
-- Disables `NetworkManager-wait-online.service` to trim cold boot time.
-- Inotify user watch limit raised to 524,288 for large development projects.
-- Hardware video decode via RPM Fusion `mesa-va-drivers-freeworld` on AMD Radeon GPUs.
-- Disables idle background daemons (`ModemManager`, `thermald`, `rsyslog`, `abrtd`, and `lvm2-monitor`).
-- Installs modern developer CLI tools (`fzf`, `zoxide`, `eza`, `git-delta`, `duf`).
-
-To apply these tweaks:
+The default script changes only the developer file-watch limit:
 
 ```bash
 sudo ./scripts/apply-system-optimizations.sh
 ```
+
+It preserves unrelated sysctl settings and higher watch limits, backs up changed
+files, verifies the kernel value, and restores the previous setting if application
+fails. It does not install packages, alter power profiles, or disable services.
+See [optional system steps](docs/system-tuning.md) for individually verified
+changes and rollback. Previously applied system settings are left in place.
 
 ## Verification
 
