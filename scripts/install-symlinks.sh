@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 # Link tracked configs and portable fragments, preserving local settings in backups.
 set -euo pipefail
-DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
-command -v python3 >/dev/null
-command -v git >/dev/null
+for tool in python3 git; do
+    command -v "$tool" >/dev/null || { echo "Missing required tool: $tool" >&2; exit 1; }
+done
+DOTFILES_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
 
 # Preserve conflicts, including dangling links, before installing one source.
 link_item() {

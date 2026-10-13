@@ -59,6 +59,7 @@ def migrate(path: Path) -> None:
         raise ValueError('Symlinked .bashrc: integrate shell/dotfiles.sh manually')
     original = path.read_text() if path.exists() else ''
     updated = original.replace(LEGACY, '')
+    # shortcut: loader detection matches raw text; manually source the fragment when a loader is unreachable.
     if DIRECTORY_LOADER not in updated and HOOK not in updated:
         updated = updated.rstrip('\n') + '\n\n' + HOOK
     if updated == original:
@@ -67,7 +68,20 @@ def migrate(path: Path) -> None:
         with tempfile.NamedTemporaryFile(prefix=path.name + '.backup-', dir=path.parent, delete=False) as backup:
             shutil.copy2(path, backup.name)
             print(f'Bash backup: {backup.name}')
-    path.write_text(updated)
+    mode = path.stat().st_mode & 0o7777 if path.exists() else 0o600
+    temporary_name = None
+    try:
+        with tempfile.NamedTemporaryFile(mode='w', encoding='utf-8', prefix=path.name + '.tmp-',
+                                         dir=path.parent, delete=False) as temporary:
+            temporary_name = temporary.name
+            temporary.write(updated)
+            temporary.flush()
+            os.fchmod(temporary.fileno(), mode)
+            os.fsync(temporary.fileno())
+        os.replace(temporary_name, path)
+    finally:
+        if temporary_name is not None:
+            Path(temporary_name).unlink(missing_ok=True)
 
 
 def migrate_git(path: Path, include: Path) -> None:
@@ -89,14 +103,14 @@ def migrate_git(path: Path, include: Path) -> None:
         draft.write_text(original)
         for key, value in settings.items():
             result = subprocess.run(['git', 'config', '--file', str(draft), '--fixed-value',
-                                     '--unset-all', key, value], capture_output=True, text=True)
+                                     '--unset-all', key, value], capture_output=True, text=True, check=False)
             if result.returncode not in (0, 5):
                 raise RuntimeError(f'Cannot migrate Git setting {key}: {result.stderr}')
         # Let Git quote the path instead of implementing its configuration grammar.
         prefix = Path(directory) / 'include'
         subprocess.run(['git', 'config', '--file', str(prefix), '--add', 'include.path', str(include)], check=True)
         existing = subprocess.run(['git', 'config', '--file', str(draft), '--get-all', 'include.path'],
-                                  capture_output=True, text=True)
+                                  capture_output=True, text=True, check=False)
         if existing.returncode not in (0, 1):
             raise RuntimeError('Cannot read Git include settings')
         updated = draft.read_text()

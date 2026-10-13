@@ -33,5 +33,25 @@ bash "$repo/scripts/install-symlinks.sh" >/dev/null
 [[ $(git config --global --get-all include.path | wc -l) == 1 ]]
 [[ $(find "$HOME/.config" -maxdepth 1 -name 'waybar.backup-*' | wc -l) == 1 ]]
 # Portable fragments must not initialize interactive tools in a script.
-bash -c 'source "$HOME/.bashrc.d/dotfiles.sh"; [[ ! ${CUSTOM_LOCAL+present} ]]'
+bash -c 'source "$HOME/.bashrc.d/dotfiles.sh"; ! alias syu >/dev/null 2>&1'
+# A checkout reached through a symlink must still install physical source paths.
+ln -s "$repo" "$task_tmp/checkout"
+bash "$task_tmp/checkout/scripts/install-symlinks.sh" >/dev/null
+bash "$task_tmp/checkout/scripts/install-symlinks.sh" >/dev/null
+[[ $(find "$HOME/.config" -maxdepth 1 -name 'kitty.backup-*' | wc -l) == 1 ]]
+[[ $(find "$HOME/.config" -maxdepth 1 -name 'waybar.backup-*' | wc -l) == 1 ]]
+# Missing prerequisites must be named before any local startup file is changed.
+for missing in python3 git; do
+    isolated="$task_tmp/missing-$missing"
+    mkdir -p "$isolated/bin" "$isolated/home"
+    if [[ $missing == python3 ]]; then other=git; else other=python3; fi
+    ln -s "$(command -v "$other")" "$isolated/bin/$other"
+    printf 'local settings\n' > "$isolated/home/.bashrc"
+    if HOME="$isolated/home" PATH="$isolated/bin" /bin/bash "$repo/scripts/install-symlinks.sh" > "$isolated/output" 2>&1; then
+        echo "Installer accepted missing $missing" >&2
+        exit 1
+    fi
+    grep -q "Missing required tool: $missing" "$isolated/output"
+    [[ $(cat "$isolated/home/.bashrc") == 'local settings' ]]
+done
 printf 'Installer regression checks passed\n'

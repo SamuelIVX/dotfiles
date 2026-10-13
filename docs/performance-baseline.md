@@ -21,6 +21,11 @@ sandbox, not a complete Hyprland session; no desktop performance gain is claimed
 | Boot/failed services | Unverified | System and user bus access denied |
 | Desktop idle CPU/power | Unverified | Process visibility excludes the live desktop |
 
+The historical samples above collected each variant as a separate batch. Cache
+warm-up or changing host load can bias that difference. The repeat procedure
+below interleaves variants and alternates first position within each pair; the
+historical numbers have not been remeasured with this procedure.
+
 ## Repeat shell startup measurement
 
 Run from your normal host terminal. This measures startup without terminal
@@ -32,19 +37,26 @@ import pathlib, statistics, subprocess, tempfile, time
 
 original = pathlib.Path.home().joinpath('.bashrc').read_text()
 with tempfile.TemporaryDirectory() as directory:
-    for variant in ('current', 'without_fastfetch'):
+    variants = ('current', 'without_fastfetch')
+    samples = {variant: [] for variant in variants}
+    configs = {}
+    for variant in variants:
         rc = pathlib.Path(directory) / variant
         # Intercept only direct fastfetch calls in this disposable child shell.
         # The tracked fragment and existing rc both use direct calls.
         rc.write_text(('fastfetch() { :; }\n' if variant == 'without_fastfetch' else '') + original)
-        samples = []
-        for _ in range(20):
+        configs[variant] = rc
+    for round_number in range(20):
+        order = variants if round_number % 2 == 0 else variants[::-1]
+        for variant in order:
+            rc = configs[variant]
             start = time.perf_counter()
             subprocess.run(['bash', '--noprofile', '--rcfile', str(rc), '-ic', 'exit'],
                            stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=True)
-            samples.append((time.perf_counter() - start) * 1000)
-        assert len(samples) == 20
-        print(variant, 'median/range ms:', statistics.median(samples), min(samples), max(samples))
+            samples[variant].append((time.perf_counter() - start) * 1000)
+    for variant, values in samples.items():
+        assert len(values) == 20
+        print(variant, 'median/range ms:', statistics.median(values), min(values), max(values))
 ```
 
 This temporary function does not intercept an explicit `command fastfetch` or

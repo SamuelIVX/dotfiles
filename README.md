@@ -154,6 +154,12 @@ The main modifier key is `SUPER`.
 
 ## Installation & setup
 
+The installer requires `python3` and **Git 2.30 or later** (`git config --fixed-value`).
+The option is documented in [Git 2.30's configuration reference](https://github.com/git/git/blob/v2.30.0/Documentation/git-config.txt).
+`delta` is needed only for the installed Git presentation settings, not to run
+the installer. Symlinked `.bashrc` and `.gitconfig` files require manual integration;
+do not replace those links to run this installer.
+
 To link all configuration directories (`hypr`, `waybar`, `kitty`, `rofi`, `swaync`, `fastfetch`, `btop`, `starship.toml`) to `~/.config/`:
 
 ```bash
@@ -191,3 +197,21 @@ Clipboard history supports Enter to copy, Delete to delete the selected entry,
 and Ctrl+Delete to clear history after confirmation. Escape leaves the clipboard
 and history alone. Wallpaper selection displays relative paths and handles
 punctuation and duplicate filenames without regex matching.
+
+
+### Portable Bash and Git settings
+
+The installer links `shell/dotfiles.sh` into `~/.bashrc.d/` and includes
+`git/developer.gitconfig` from local Git configuration. Shell tools are initialized
+only in interactive shells, and missing optional tools are skipped. Local Git
+identity, credentials, signing, and differing presentation overrides are preserved.
+
+Migration removes only the exact recognized legacy Bash block and matching Git
+presentation settings. It backs up changed startup files and replaces `.bashrc`
+atomically, preserving its mode. Symlink conflicts are saved as `BACKUP/original`.
+Restore the printed backups to undo installation.
+
+The Bash loader check matches literal text without executing `.bashrc`. If that
+text exists only in an unreachable block, manually source the fragment from an
+active part of `.bashrc`. Locally edited legacy blocks may also need manual
+integration to avoid duplicate initialization.
