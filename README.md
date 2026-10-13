@@ -191,25 +191,3 @@ Clipboard history supports Enter to copy, Delete to delete the selected entry,
 and Ctrl+Delete to clear history after confirmation. Escape leaves the clipboard
 and history alone. Wallpaper selection displays relative paths and handles
 punctuation and duplicate filenames without regex matching.
-
-### Portable Bash and Git settings
-
-The installer links `shell/dotfiles.sh` into `~/.bashrc.d/` and installs a Git
-include for `git/developer.gitconfig`. Bash tooling is interactive-only and guarded
-when optional programs are missing. Fastfetch remains enabled at shell startup.
-Install the optional CLI tools from [system steps](docs/system-tuning.md) first if
-needed; Git Delta requires the `delta` executable.
-
-Only the exact recognized legacy Bash block and matching Git presentation values
-are migrated. Locally edited shell blocks are preserved and may require manual
-deduplication. Git identity, credentials, signing, and differing local overrides
-stay local and take precedence. Symlinked `.bashrc` or `.gitconfig` require manual
-integration. Backups use unique `.backup-*` names; link conflicts are stored under
-`BACKUP/original`. Restore backups to undo installation, then open a new shell.
-
-
-### Performance evidence
-
-See [the performance baseline](docs/performance-baseline.md) for recorded shell
-startup samples, their sandbox limitations, and the remaining host checks. Current
-visual and redraw settings are preferences; they do not establish measured latency.
