@@ -36,7 +36,7 @@ Hyprland desktop setup on Fedora Linux, styled with Catppuccin Mocha. Built for 
 │   │       ├── reload.sh         # Reload compositor, bar, and notifications
 │   │       └── wallpaper.sh      # Per-workspace wallpaper listener
 │   ├── kitty/
-│   │   └── kitty.conf            # GPU terminal with 144Hz input tuning
+│   │   └── kitty.conf            # GPU terminal with configured redraw delays
 │   ├── rofi/
 │   │   ├── config.rasi           # Application launcher
 │   │   ├── scripts/
@@ -109,11 +109,11 @@ https://github.com/user-attachments/assets/e41b7de6-2717-4371-a81f-c4a124757f12
 |---|---|
 | [Hyprland](https://github.com/hyprwm/Hyprland) | Wayland tiling compositor |
 | [Waybar](https://github.com/Alexays/Waybar) | Floating status bar with workspace indicators |
-| [awww](https://codeberg.org/LGFae/awww) | Wallpaper daemon running 144 FPS bezier transitions |
+| [awww](https://codeberg.org/LGFae/awww) | Wallpaper daemon with transitions configured at 144 FPS |
 | [SwayNC](https://github.com/ErikReider/SwayNotificationCenter) | Notification center and quick settings |
 | [hyprlock](https://github.com/hyprwm/hyprlock) | Screen locker with screenshot blur |
 | [hypridle](https://github.com/hyprwm/hypridle) | Idle listener and sleep controller |
-| [Kitty](https://github.com/kovidgoyal/kitty) | Terminal emulator running 6ms refresh and 1ms input latency |
+| [Kitty](https://github.com/kovidgoyal/kitty) | Terminal emulator with 6ms repaint and 1ms input delay settings |
 | [Rofi](https://github.com/davatorium/rofi) | App launcher, power menu, and picker scripts |
 | [Fastfetch](https://github.com/fastfetch-cli/fastfetch) | System information summary |
 
@@ -160,7 +160,7 @@ To link all configuration directories (`hypr`, `waybar`, `kitty`, `rofi`, `swayn
 ./scripts/install-symlinks.sh
 ```
 
-Existing conflicting configuration files or directories will be safely backed up automatically with a timestamp before creating the symlinks.
+Existing conflicting files, directories, and symlinks are preserved in unique backup directories before replacement.
 
 ## System optimizations
 
@@ -206,3 +206,10 @@ deduplication. Git identity, credentials, signing, and differing local overrides
 stay local and take precedence. Symlinked `.bashrc` or `.gitconfig` require manual
 integration. Backups use unique `.backup-*` names; link conflicts are stored under
 `BACKUP/original`. Restore backups to undo installation, then open a new shell.
+
+
+### Performance evidence
+
+See [the performance baseline](docs/performance-baseline.md) for recorded shell
+startup samples, their sandbox limitations, and the remaining host checks. Current
+visual and redraw settings are preferences; they do not establish measured latency.
