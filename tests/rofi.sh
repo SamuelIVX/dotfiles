@@ -9,6 +9,11 @@ mkdir -p "$HOME/Pictures/Wallpapers/a" "$HOME/Pictures/Wallpapers/b" "$task_tmp/
 cat > "$task_tmp/bin/rofi" <<'MOCK'
 #!/bin/bash
 cat > "$TEST_DIR/menu"
+# The deletion shortcut must not collide with Rofi's default text editing key.
+if [[ " $* " == *' -kb-custom-1 Delete '* && " $* " != *' -kb-remove-char-forward Control+d '* ]]; then
+    echo 'Delete remains assigned to two actions' >&2
+    exit 2
+fi
 count=0
 [[ ! -f $TEST_DIR/count ]] || read -r count < "$TEST_DIR/count"
 printf '%s\n' "$((count+1))" > "$TEST_DIR/count"
