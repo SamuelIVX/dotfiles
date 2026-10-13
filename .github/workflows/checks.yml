@@ -11,4 +11,4 @@ jobs:
       - run: sudo apt-get update && sudo apt-get install -y shellcheck jq
       - run: bash tests/run.sh
       - name: ShellCheck changed shell scripts
-        run: shellcheck .config/hypr/scripts/wallpaper.sh tests/*.sh
+        run: shellcheck .config/hypr/scripts/wallpaper.sh .config/rofi/scripts/{wifi,clipboard_history,wallpaper}.sh scripts/apply-system-optimizations.sh tests/*.sh
