@@ -36,7 +36,7 @@ Hyprland desktop setup on Fedora Linux, styled with Catppuccin Mocha. Built for 
 │   │       ├── reload.sh         # Reload compositor, bar, and notifications
 │   │       └── wallpaper.sh      # Per-workspace wallpaper listener
 │   ├── kitty/
-│   │   └── kitty.conf            # GPU terminal with 144Hz input tuning
+│   │   └── kitty.conf            # GPU terminal with configured redraw delays
 │   ├── rofi/
 │   │   ├── config.rasi           # Application launcher
 │   │   ├── scripts/
@@ -109,11 +109,11 @@ https://github.com/user-attachments/assets/e41b7de6-2717-4371-a81f-c4a124757f12
 |---|---|
 | [Hyprland](https://github.com/hyprwm/Hyprland) | Wayland tiling compositor |
 | [Waybar](https://github.com/Alexays/Waybar) | Floating status bar with workspace indicators |
-| [awww](https://codeberg.org/LGFae/awww) | Wallpaper daemon running 144 FPS bezier transitions |
+| [awww](https://codeberg.org/LGFae/awww) | Wallpaper daemon with transitions configured at 144 FPS |
 | [SwayNC](https://github.com/ErikReider/SwayNotificationCenter) | Notification center and quick settings |
 | [hyprlock](https://github.com/hyprwm/hyprlock) | Screen locker with screenshot blur |
 | [hypridle](https://github.com/hyprwm/hypridle) | Idle listener and sleep controller |
-| [Kitty](https://github.com/kovidgoyal/kitty) | Terminal emulator running 6ms refresh and 1ms input latency |
+| [Kitty](https://github.com/kovidgoyal/kitty) | Terminal emulator with 6ms repaint and 1ms input delay settings |
 | [Rofi](https://github.com/davatorium/rofi) | App launcher, power menu, and picker scripts |
 | [Fastfetch](https://github.com/fastfetch-cli/fastfetch) | System information summary |
 
@@ -154,13 +154,19 @@ The main modifier key is `SUPER`.
 
 ## Installation & setup
 
+The installer requires `python3` and **Git 2.30 or later** (`git config --fixed-value`).
+The option is documented in [Git 2.30's configuration reference](https://github.com/git/git/blob/v2.30.0/Documentation/git-config.txt).
+`delta` is needed only for the installed Git presentation settings, not to run
+the installer. Symlinked `.bashrc` and `.gitconfig` files require manual integration;
+do not replace those links to run this installer.
+
 To link all configuration directories (`hypr`, `waybar`, `kitty`, `rofi`, `swaync`, `fastfetch`, `btop`, `starship.toml`) to `~/.config/`:
 
 ```bash
 ./scripts/install-symlinks.sh
 ```
 
-Existing conflicting configuration files or directories will be safely backed up automatically with a timestamp before creating the symlinks.
+Existing conflicting files, directories, and symlinks are preserved in unique backup directories before replacement.
 
 ## System optimizations
 
@@ -191,3 +197,21 @@ Clipboard history supports Enter to copy, Delete to delete the selected entry,
 and Ctrl+Delete to clear history after confirmation. Escape leaves the clipboard
 and history alone. Wallpaper selection displays relative paths and handles
 punctuation and duplicate filenames without regex matching.
+
+
+### Portable Bash and Git settings
+
+The installer links `shell/dotfiles.sh` into `~/.bashrc.d/` and includes
+`git/developer.gitconfig` from local Git configuration. Shell tools are initialized
+only in interactive shells, and missing optional tools are skipped. Local Git
+identity, credentials, signing, and differing presentation overrides are preserved.
+
+Migration removes only the exact recognized legacy Bash block and matching Git
+presentation settings. It backs up changed startup files and replaces `.bashrc`
+atomically, preserving its mode. Symlink conflicts are saved as `BACKUP/original`.
+Restore the printed backups to undo installation.
+
+The Bash loader check matches literal text without executing `.bashrc`. If that
+text exists only in an unreachable block, manually source the fragment from an
+active part of `.bashrc`. Locally edited legacy blocks may also need manual
+integration to avoid duplicate initialization.
