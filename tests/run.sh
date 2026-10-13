@@ -4,3 +4,5 @@ set -euo pipefail
 cd "$(dirname "$0")/.."
 while IFS= read -r -d '' script; do bash -n "$script"; done < <(find scripts .config tests -type f -name '*.sh' -print0)
 for test in tests/*.sh; do [[ $test == tests/run.sh ]] || bash "$test"; done
+
+for test in tests/*.py; do [[ ! -f $test ]] || python3 -B "$test"; done
