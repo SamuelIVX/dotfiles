@@ -24,9 +24,10 @@ class DesktopIntegrationTests(unittest.TestCase):
         self.log = self.home / "calls"
         self.env = dict(os.environ, HOME=str(self.home), CALLS=str(self.log),
                         PATH=f"{self.bin}:/usr/bin:/bin")
-        for name in ("hyprctl", "killall", "notify-send", "swaync"):
+        for name in ("hyprctl", "killall", "notify-send"):
             self.command(name, 'printf "%s\\n" "$0" "$@" >> "$CALLS"\n')
         self.command("nohup", 'printf "%s\\n" "$0" "$@" >> "$CALLS"\nexec "$@"\n')
+        self.command("swaync", 'printf "%s\\n" "$0" "$@" >> "$CALLS"\n: > "$HOME/swaync-started"\n')
         self.command("rofi", 'cat >/dev/null\nprintf "%s" "${CHOICE:-}"\n')
 
     def command(self, name: str, body: str) -> None:
@@ -48,12 +49,12 @@ class DesktopIntegrationTests(unittest.TestCase):
         bar.chmod(0o755)
         return bar
 
-    def wait_for_bar(self) -> None:
+    def wait_for_start(self, marker: str) -> None:
         """Wait for the detached mock's completion marker rather than racing its log."""
         deadline = time.monotonic() + 3
-        while not (self.home / "bar-started").exists() and time.monotonic() < deadline:
+        while not (self.home / marker).exists() and time.monotonic() < deadline:
             time.sleep(0.01)
-        self.assertTrue((self.home / "bar-started").exists(), "detached bar did not start")
+        self.assertTrue((self.home / marker).exists(), f"detached command did not finish: {marker}")
 
     def test_logout_and_cancel(self) -> None:
         """Logout passes one Lua expression; cancellation does not dispatch."""
@@ -92,7 +93,7 @@ class DesktopIntegrationTests(unittest.TestCase):
         self.log.unlink()
         result = self.run_script(launcher)
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.wait_for_bar()
+        self.wait_for_start("bar-started")
         self.assertIn(str(bar), self.log.read_text().splitlines())
         self.assertIn("selected-waybar", self.log.read_text().splitlines())
         launch_link = self.home / ".config/waybar/scripts/launch.sh"
@@ -102,11 +103,14 @@ class DesktopIntegrationTests(unittest.TestCase):
         self.log.unlink()
         result = self.run_script(".config/hypr/scripts/reload.sh")
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.wait_for_bar()
+        self.wait_for_start("bar-started")
+        # Full reload also starts a detached notification daemon; finish it before cleanup.
+        self.wait_for_start("swaync-started")
         calls = self.log.read_text().splitlines()
         self.assertIn(str(bar), calls)
         self.assertIn("selected-waybar", calls)
         self.assertIn("reload", calls)
+        self.assertIn(str(self.bin / "swaync"), calls)
 
     def test_missing_bar_preserves_running_processes(self) -> None:
         """Fail before kill/reload when the compatible build has not been installed."""
