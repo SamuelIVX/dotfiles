@@ -8,7 +8,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - run: sudo apt-get update && sudo apt-get install -y shellcheck jq
+      - run: sudo apt-get update && sudo apt-get install -y shellcheck jq luajit
       - run: bash tests/run.sh
       - name: ShellCheck changed shell scripts
-        run: shellcheck .config/hypr/scripts/wallpaper.sh .config/rofi/scripts/{wifi,clipboard_history,wallpaper}.sh scripts/apply-system-optimizations.sh tests/*.sh
+        run: shellcheck .config/hypr/scripts/{wallpaper,reload}.sh .config/waybar/scripts/launch.sh .config/rofi/scripts/{wifi,clipboard_history,wallpaper,powermenu}.sh scripts/{apply-system-optimizations,build-waybar}.sh tests/*.sh

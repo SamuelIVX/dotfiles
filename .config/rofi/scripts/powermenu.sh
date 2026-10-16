@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# Dispatch power-menu actions, using the Lua compositor API for logout.
 
 # Options with Nerd Font icons
 lock="󰌾  Lock"
@@ -29,7 +30,7 @@ case "$chosen" in
         systemctl suspend
         ;;
     "$logout")
-        hyprctl dispatch exit
+        hyprctl dispatch 'hl.dsp.exit()'
         ;;
     "$reboot")
         systemctl reboot
