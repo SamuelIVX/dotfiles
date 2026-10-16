@@ -1,0 +1,11 @@
+-- Load Samuel's desktop modules in dependency order, relative to this config.
+require("conf.env")
+require("conf.monitors")
+require("conf.programs")
+require("conf.autostart")
+require("conf.look_and_feel")
+require("conf.animations")
+require("conf.layouts")
+require("conf.input")
+require("conf.keybinds")
+require("conf.windowrules")

@@ -1,0 +1,10 @@
+-- Start session services once, never during parsing or ordinary config reload.
+hl.on("hyprland.start", function()
+    hl.exec_cmd("nm-applet --indicator")
+    hl.exec_cmd("~/.config/waybar/scripts/launch.sh --start & awww-daemon")
+    hl.exec_cmd("swaync")
+    hl.exec_cmd("hypridle")
+    hl.exec_cmd("~/.config/hypr/scripts/wallpaper.sh")
+    hl.exec_cmd("wl-paste --watch cliphist store")
+    hl.exec_cmd("/usr/libexec/kf6/polkit-kde-authentication-agent-1")
+end)

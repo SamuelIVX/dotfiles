@@ -1,0 +1,56 @@
+-- Preserve existing shortcuts with native Lua dispatchers and explicit modifiers.
+local programs = require("conf.programs")
+local mainMod = "SUPER"
+
+hl.bind(mainMod .. " + Return", hl.dsp.exec_cmd(programs.terminal))
+hl.bind(mainMod .. " + Q", hl.dsp.window.close())
+hl.bind(mainMod .. " + M", hl.dsp.exec_cmd("~/.config/rofi/scripts/powermenu.sh"))
+hl.bind(mainMod .. " + Escape", hl.dsp.exec_cmd("~/.config/rofi/scripts/powermenu.sh"))
+hl.bind(mainMod .. " + F", hl.dsp.exec_cmd(programs.fileManager))
+hl.bind(mainMod .. " + SHIFT + F", hl.dsp.window.fullscreen({ mode = "fullscreen", action = "toggle" }))
+hl.bind(mainMod .. " + V", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mainMod .. " + Space", hl.dsp.window.float({ action = "toggle" }))
+hl.bind(mainMod .. " + D", hl.dsp.exec_cmd(programs.menu))
+hl.bind(mainMod .. " + P", hl.dsp.window.pseudo({ action = "toggle" }))
+hl.bind(mainMod .. " + J", hl.dsp.layout("togglesplit"))
+hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd([[sh -c 'grimblast copysave area "$HOME/Pictures/Screenshots/$(date +%F_%H-%M-%S).png"']]))
+hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("firefox"))
+hl.bind(mainMod .. " + N", hl.dsp.exec_cmd("swaync-client -t -sw"))
+hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("code"))
+hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd(programs.wifi))
+hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd(programs.bluetooth))
+hl.bind(mainMod .. " + SHIFT + A", hl.dsp.exec_cmd(programs.wallpaper))
+hl.bind(mainMod .. " + L", hl.dsp.exec_cmd("hyprlock"))
+hl.bind(mainMod .. " + G", hl.dsp.exec_cmd("kitty --class floating-terminal -e lazygit"))
+hl.bind(mainMod .. " + SHIFT + Escape", hl.dsp.exec_cmd("kitty --class floating-terminal -e btop"))
+hl.bind(mainMod .. " + A", hl.dsp.exec_cmd("~/.config/hypr/scripts/wallpaper.sh --once"))
+hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("~/.config/hypr/scripts/reload.sh"))
+hl.bind(mainMod .. " + R", hl.dsp.exec_cmd("~/.config/waybar/scripts/launch.sh"))
+hl.bind(mainMod .. " + SHIFT + V", hl.dsp.exec_cmd("~/.config/rofi/scripts/clipboard_history.sh"))
+
+hl.bind(mainMod .. " + left", hl.dsp.focus({ direction = "left" }))
+hl.bind(mainMod .. " + right", hl.dsp.focus({ direction = "right" }))
+hl.bind(mainMod .. " + up", hl.dsp.focus({ direction = "up" }))
+hl.bind(mainMod .. " + down", hl.dsp.focus({ direction = "down" }))
+
+for workspace = 1, 10 do
+    local key = workspace % 10
+    hl.bind(mainMod .. " + " .. key, hl.dsp.focus({ workspace = workspace }))
+    hl.bind(mainMod .. " + SHIFT + " .. key, hl.dsp.window.move({ workspace = workspace, follow = true }))
+end
+hl.bind(mainMod .. " + mouse_down", hl.dsp.focus({ workspace = "e+1" }))
+hl.bind(mainMod .. " + mouse_up", hl.dsp.focus({ workspace = "e-1" }))
+-- Lua drag dispatchers handle press/release; the legacy mouse flag is not a bind option.
+hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag())
+hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize())
+
+hl.bind("XF86AudioRaiseVolume", hl.dsp.exec_cmd("wpctl set-volume -l 1 @DEFAULT_AUDIO_SINK@ 5%+"), { locked = true, repeating = true })
+hl.bind("XF86AudioLowerVolume", hl.dsp.exec_cmd("wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-"), { locked = true, repeating = true })
+hl.bind("XF86AudioMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"), { locked = true, repeating = true })
+hl.bind("XF86AudioMicMute", hl.dsp.exec_cmd("wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle"), { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessUp", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%+"), { locked = true, repeating = true })
+hl.bind("XF86MonBrightnessDown", hl.dsp.exec_cmd("brightnessctl -e4 -n2 set 5%-"), { locked = true, repeating = true })
+hl.bind("XF86AudioNext", hl.dsp.exec_cmd("playerctl next"), { locked = true })
+hl.bind("XF86AudioPause", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
+hl.bind("XF86AudioPlay", hl.dsp.exec_cmd("playerctl play-pause"), { locked = true })
+hl.bind("XF86AudioPrev", hl.dsp.exec_cmd("playerctl previous"), { locked = true })

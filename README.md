@@ -2,6 +2,10 @@
 
 Hyprland desktop setup on Fedora Linux, styled with Catppuccin Mocha. Built for an AMD Ryzen 5 7600X and Radeon RX 6750 XT driving a 144Hz 1440p display.
 
+The Lua migration targets Hyprland 0.56.2 and a pinned user-local Waybar build.
+It is staged and must pass the build, review, and desktop checks before activation.
+See [Lua migration, Waybar build, and rollback](docs/hyprland-lua.md).
+
 > [!NOTE]
 > Configured for Fedora, but works on any modern Wayland distribution with minor path adjustments. Update wallpaper paths in `~/.config/hypr/scripts/wallpaper.sh` to match your local files.
 
@@ -18,19 +22,20 @@ Hyprland desktop setup on Fedora Linux, styled with Catppuccin Mocha. Built for 
 │   │   ├── config.jsonc          # System info display
 │   │   └── my-logo.txt           # Custom ASCII logo
 │   ├── hypr/
-│   │   ├── conf/                 # Modular configuration
-│   │   │   ├── animations.conf   # Smooth slidefade transitions
-│   │   │   ├── autostart.conf    # Background daemons & polkit agent
-│   │   │   ├── env.conf          # Wayland and toolkit variables
-│   │   │   ├── input.conf        # Keyboard, mouse, and focus
-│   │   │   ├── keybinds.conf     # Hotkeys and layout bindings
-│   │   │   ├── layouts.conf      # Dwindle layout settings
-│   │   │   ├── look_and_feel.conf# Gaps, borders, shadows, and blur
-│   │   │   ├── monitors.conf     # Resolution, refresh rate, and scale
-│   │   │   ├── programs.conf     # Default terminal, file manager, and launcher
-│   │   │   └── windowrules.conf  # Opacity, floating, and window placement
+│   │   ├── conf/                 # Ten Lua modules; original .conf files retained
+│   │   │   ├── animations.lua    # Smooth slidefade transitions
+│   │   │   ├── autostart.lua     # Background daemons & polkit agent
+│   │   │   ├── env.lua           # Wayland and toolkit variables
+│   │   │   ├── input.lua         # Keyboard, mouse, and focus
+│   │   │   ├── keybinds.lua      # Hotkeys and layout bindings
+│   │   │   ├── layouts.lua       # Dwindle layout settings
+│   │   │   ├── look_and_feel.lua # Gaps, borders, shadows, and blur
+│   │   │   ├── monitors.lua      # Resolution, refresh rate, and scale
+│   │   │   ├── programs.lua      # Default terminal, file manager, and launcher
+│   │   │   └── windowrules.lua   # Floating and window placement
 │   │   ├── hypridle.conf         # Screen dimming and sleep triggers
-│   │   ├── hyprland.conf         # Root entry point (sources conf/*.conf)
+│   │   ├── hyprland.lua          # Maintained entry point (requires conf/*.lua)
+│   │   ├── hyprland.conf         # Frozen legacy entry point for rollback
 │   │   ├── hyprlock.conf         # Lock screen with frosted blur
 │   │   └── scripts/
 │   │       ├── reload.sh         # Reload compositor, bar, and notifications
@@ -60,6 +65,7 @@ Hyprland desktop setup on Fedora Linux, styled with Catppuccin Mocha. Built for 
 ├── assets/                       # Screenshots and demo media
 ├── scripts/
 │   ├── apply-system-optimizations.sh # DNF, tuned profile, and service tweaks
+│   ├── build-waybar.sh           # Build/test/select the pinned local Waybar
 │   └── install-symlinks.sh       # Idempotent symlink installer for ~/.config
 └── README.md
 ```
@@ -162,6 +168,10 @@ do not replace those links to run this installer.
 
 To link all configuration directories (`hypr`, `waybar`, `kitty`, `rofi`, `swaync`, `fastfetch`, `btop`, `starship.toml`) to `~/.config/`:
 
+For the Lua migration, first follow the staged verification and activation procedure
+in [the migration guide](docs/hyprland-lua.md). The general installer immediately
+links this checkout and is not a preview operation.
+
 ```bash
 ./scripts/install-symlinks.sh
 ```
@@ -184,8 +194,14 @@ changes and rollback. Previously applied system settings are left in place.
 
 ## Verification
 
-Run `bash tests/run.sh` for shell syntax and isolated regression checks. Tests use
+Run `bash tests/run.sh` for shell syntax and isolated regression checks (requires
+Python 3, LuaJIT, jq, and Bash). Tests use
 mock commands and temporary homes; they do not alter the running desktop.
+
+Lua preservation checks cover all 63 bindings and configuration values. Validate
+the actual API separately with `Hyprland --verify-config --config "$PWD/.config/hypr/hyprland.lua"`.
+The [migration guide](docs/hyprland-lua.md) includes the Waybar build, CodeRabbit
+review gate, and required fresh-login acceptance checks.
 
 The workspace wallpaper listener has one owner per Hyprland session. `SUPER+A`
 runs `wallpaper.sh --once` to refresh without creating another listener. Workspaces

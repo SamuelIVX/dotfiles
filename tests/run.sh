@@ -6,3 +6,5 @@ while IFS= read -r -d '' script; do bash -n "$script"; done < <(find scripts .co
 for test in tests/*.sh; do [[ $test == tests/run.sh ]] || bash "$test"; done
 
 for test in tests/*.py; do [[ ! -f $test ]] || python3 -B "$test"; done
+
+luajit tests/hyprland.lua
